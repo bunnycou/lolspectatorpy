@@ -1,4 +1,4 @@
-import sys, requests, json
+import sys, requests, json, os
 
 config = json.loads(open("config.json", "r").read())
 API_KEY = config["key"]
@@ -32,10 +32,13 @@ def main(args):
     
     gameID, encryptKey = puuid2game(player)
 
-    print("Paste the following into command prompt: ")
     commandstring1 = "cd /d \"C:\\Riot Games\\League of Legends\\Game\" & \"League of Legends.exe\" \"spectator spectator.na1.lol.pvp.net:8080"
     commandstring2 = "NA1\" \"-UseRads\""
-    print(f"{commandstring1} {encryptKey} {gameID} {commandstring2}")
+    totalstring = f"{commandstring1} {encryptKey} {gameID} {commandstring2}"
+
+    print("The following command is being executed automatically (if nothing happens, copy and paste it into command prompt): ")
+    print(totalstring)
+    os.system(totalstring)
 
 def player2puuid(name, tag):
     response = requests.get(PLAYER_API(name, tag))
